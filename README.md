@@ -2,7 +2,7 @@
 
 A java-based GUI for configuring and running the Sinclair QL emulator sQLux
 
-To run:
+To run (java version 17+):
 
       java -jar /home/simon/code/java/sQLuxMenu/store/SqluxMenu.jar
 
