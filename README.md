@@ -1,6 +1,6 @@
 # sQLux-menu
 
-A java-based GUI for configuring and running the Sinclair QL emulator sQLux
+A java-based GUI for configuring and running the Sinclair QL emulator sQLux (https://github.com/SinclairQL/sQLux).
 
 To run (java version 17+):
 
