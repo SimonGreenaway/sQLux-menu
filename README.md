@@ -21,3 +21,4 @@ Alternatives set the following environment variables:
 
 ![image](https://github.com/user-attachments/assets/ef7096cd-2d6b-4ff0-ba12-31146a0cbc4a)
 ![image](https://github.com/user-attachments/assets/272df794-eb72-489f-adb1-96993aa92e74)
+![image](https://github.com/user-attachments/assets/852066d6-8713-471a-8e7a-48d3874a22e3)
