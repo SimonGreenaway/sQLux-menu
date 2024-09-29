@@ -219,7 +219,7 @@
                                                   <Component id="paletteGreyscaleRadioButton" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
-                                                  <Component id="keyboardUKRadioButton" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="keyboardGBRadioButton" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="keyboardDERadioButton" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -343,7 +343,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="keyboardUKRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="keyboardGBRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="keyboardDERadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="keyboardUSRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -388,6 +388,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="1024"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ramTopTextFieldActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CPUHogCheckBox">
                   <Properties>
@@ -510,7 +513,7 @@
                     <Property name="text" type="java.lang.String" value="Keyboard:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JRadioButton" name="keyboardUKRadioButton">
+                <Component class="javax.swing.JRadioButton" name="keyboardGBRadioButton">
                   <Properties>
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="keyboardButtonGroup"/>
@@ -752,6 +755,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectIORom2ButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
@@ -762,6 +768,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectIOROMButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="IORom2TextField">
                 </Component>

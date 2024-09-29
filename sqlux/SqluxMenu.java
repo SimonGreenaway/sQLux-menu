@@ -8,9 +8,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -18,11 +21,14 @@ import javax.swing.JOptionPane;
  */
 public class SqluxMenu extends javax.swing.JFrame
 {
-
     private static final long serialVersionUID=1L;
-    private static File directory=new File(System.getProperty("user.home")+File.separator+".sqlux");
-    private static File sqluxHome=new File("/home/simon/emulators/ql/emulators/sQLux");
-    private static File sqlux=new File(sqluxHome, "sqlux");
+    private static File iniDirectory=System.getenv("SQLUXINI")==null
+                        ? new File(System.getProperty("user.home")+File.separator+".sqlux")
+                        : new File(System.getenv("SQLUXINI"));
+
+    //private static File sqluxHome=new File(System.getenv("SQLUXHOME")==null?"sQLux":System.getenv("SQLUX"));
+    private static File sqluxBinary=System.getenv("SQLUX")==null?new File("sqlux")
+                                                    :new File(System.getenv("SQLUX"));
 
     private transient final Ini ini=new Ini();
 
@@ -33,7 +39,128 @@ public class SqluxMenu extends javax.swing.JFrame
     {
         initComponents();
 
-        romDirectoryTextField.setText(new File(sqluxHome, "roms").getPath());
+        romDirectoryTextField.setText(new File(sqluxBinary.getParentFile(), "roms").getPath());
+
+        deviceTable.getModel().addTableModelListener(new TableModelListener()
+        {
+            boolean changing=false;
+
+            @Override public void tableChanged(TableModelEvent tme)
+            {
+                if(changing) return;
+
+                changing=true;
+
+                final int column=tme.getColumn();
+
+                if(column>=3)
+                {
+
+                    for(int r=0;r<deviceTable.getRowCount();r++)
+                    {
+                        if((column==3)&&(deviceTable.getValueAt(r,3)!=null)&&(Boolean)deviceTable.getValueAt(r,3))
+                        {
+                            deviceTable.setValueAt(false,r,4);
+                            deviceTable.setValueAt(false,r,5);
+                        }
+                        else if((column==4)&&(deviceTable.getValueAt(r,4)!=null)&&(Boolean)deviceTable.getValueAt(r,4))
+                        {
+                            deviceTable.setValueAt(false,r,3);
+                            deviceTable.setValueAt(false,r,5);
+                        }
+                        else if((column==5)&&(deviceTable.getValueAt(r,5)!=null)&&(Boolean)deviceTable.getValueAt(r,5))
+                        {
+                            deviceTable.setValueAt(false,r,3);
+                            deviceTable.setValueAt(false,r,4);
+                        }
+                    }
+                }
+
+                changing=false;
+            }
+        });
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[])
+    {
+        boolean help=false;
+
+        for(int i=0; i<args.length; i++)
+        {
+            if((args[i].equals("-d")||(args[i].equals("--dir")))&&(i+1<args.length))
+            {
+                iniDirectory=new File(args[++i]);
+            }
+            else if((args[i].equals("-s")||(args[i].equals("--sqlux")))&&(i+1<args.length))
+            {
+                sqluxBinary=new File(args[++i]);
+            }
+            else if((args[i].equals("-h")||(args[i].equals("--help"))))
+                help=true;
+            else
+            {
+                System.err.println("Unknown command line argument: "+args[i]);
+                help=true;
+                break;
+            }
+        }
+
+        if(help)
+        {
+            System.out.println("sQLuxmenu [-d|--dir config_directory] [-s|--sqlux sqlux_binary_path] [-h|--help]");
+            System.exit(0);
+        }
+
+        if(!sqluxBinary.exists())
+        {
+            System.err.println("sQLux executable not found: "+sqluxBinary);
+            System.exit(1);
+        }
+
+        if(!iniDirectory.exists()) iniDirectory.mkdirs();
+
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try
+        {
+            for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            {
+                if("Nimbus".equals(info.getName()))
+                {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }
+        catch(ClassNotFoundException ex)
+        {
+            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        catch(InstantiationException ex)
+        {
+            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        catch(IllegalAccessException ex)
+        {
+            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        catch(javax.swing.UnsupportedLookAndFeelException ex)
+        {
+            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() ->
+        {
+            new SqluxMenu().setVisible(true);
+        });
     }
 
     /**
@@ -79,7 +206,7 @@ public class SqluxMenu extends javax.swing.JFrame
         aspectQLRadioButton = new javax.swing.JRadioButton();
         aspect1to1RadioButton = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        keyboardUKRadioButton = new javax.swing.JRadioButton();
+        keyboardGBRadioButton = new javax.swing.JRadioButton();
         keyboardDERadioButton = new javax.swing.JRadioButton();
         keyboardUSRadioButton = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
@@ -185,6 +312,13 @@ public class SqluxMenu extends javax.swing.JFrame
         jLabel1.setText("Ramtop:");
 
         ramTopTextField.setText("1024");
+        ramTopTextField.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                ramTopTextFieldActionPerformed(evt);
+            }
+        });
 
         CPUHogCheckBox.setText("CPU hog");
 
@@ -233,9 +367,9 @@ public class SqluxMenu extends javax.swing.JFrame
 
         jLabel6.setText("Keyboard:");
 
-        keyboardButtonGroup.add(keyboardUKRadioButton);
-        keyboardUKRadioButton.setSelected(true);
-        keyboardUKRadioButton.setText("GB");
+        keyboardButtonGroup.add(keyboardGBRadioButton);
+        keyboardGBRadioButton.setSelected(true);
+        keyboardGBRadioButton.setText("GB");
 
         keyboardButtonGroup.add(keyboardDERadioButton);
         keyboardDERadioButton.setText("DE");
@@ -320,7 +454,7 @@ public class SqluxMenu extends javax.swing.JFrame
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(paletteGreyscaleRadioButton))
                                     .addGroup(hardwarePanelLayout.createSequentialGroup()
-                                        .addComponent(keyboardUKRadioButton)
+                                        .addComponent(keyboardGBRadioButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(keyboardDERadioButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -413,7 +547,7 @@ public class SqluxMenu extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(keyboardUKRadioButton)
+                    .addComponent(keyboardGBRadioButton)
                     .addComponent(keyboardDERadioButton)
                     .addComponent(keyboardUSRadioButton))
                 .addGap(18, 18, 18)
@@ -468,10 +602,24 @@ public class SqluxMenu extends javax.swing.JFrame
         });
 
         selectIORom2Button.setText("Select");
+        selectIORom2Button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                selectIORom2ButtonActionPerformed(evt);
+            }
+        });
 
         jLabel19.setText("IO Rom:");
 
         selectIOROMButton.setText("Select");
+        selectIOROMButton.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                selectIOROMButtonActionPerformed(evt);
+            }
+        });
 
         jLabel20.setText("IO Rom2:");
 
@@ -821,7 +969,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
         if(ini.getFile()==null)
         {
-            ini.setFile(openFile(JFileChooser.FILES_ONLY,directory));
+            ini.setFile(openFile(JFileChooser.FILES_ONLY,iniDirectory));
         }
 
         try
@@ -830,6 +978,7 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         catch(final Exception e)
         {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
@@ -849,6 +998,7 @@ public class SqluxMenu extends javax.swing.JFrame
                     }
                     catch(final Exception e)
                     {
+                        e.printStackTrace();
                         JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
                     }
             }
@@ -872,7 +1022,7 @@ public class SqluxMenu extends javax.swing.JFrame
             // Run
             final Process p=Runtime.getRuntime().exec(new String[]
             {
-                sqlux.getAbsolutePath(), "--CONFIG", ini.getFile().getAbsolutePath()
+                sqluxBinary.getAbsolutePath(), "--CONFIG", ini.getFile().getAbsolutePath()
             });
 
             while(p.isAlive())
@@ -925,6 +1075,7 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         catch(final Exception e)
         {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_runButtonActionPerformed
@@ -938,7 +1089,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     private void selectPortRomButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_selectPortRomButtonActionPerformed
     {//GEN-HEADEREND:event_selectPortRomButtonActionPerformed
-        final File portRom=openFile(JFileChooser.DIRECTORIES_ONLY,new File(romDirectoryTextField.getText()));
+        final File portRom=openFile(JFileChooser.FILES_ONLY,new File(romDirectoryTextField.getText()));
 
         if(portRom==null)
             romDirectoryTextField.setText("");
@@ -963,7 +1114,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     private void sysRomDirectoryButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_sysRomDirectoryButtonActionPerformed
     {//GEN-HEADEREND:event_sysRomDirectoryButtonActionPerformed
-        final File sysRom=openFile(JFileChooser.DIRECTORIES_ONLY,new File(romDirectoryTextField.getText()));
+        final File sysRom=openFile(JFileChooser.FILES_ONLY,new File(romDirectoryTextField.getText()));
 
         if(sysRom==null)
             sysRomTextField.setText("");
@@ -988,7 +1139,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_openMenuItemActionPerformed
     {//GEN-HEADEREND:event_openMenuItemActionPerformed
-        final File iniFile=openFile(JFileChooser.FILES_ONLY,directory);
+        final File iniFile=openFile(JFileChooser.FILES_ONLY,iniDirectory);
 
         if(iniFile!=null)
         {
@@ -1011,7 +1162,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     private void iniListValueChanged(javax.swing.event.ListSelectionEvent evt)//GEN-FIRST:event_iniListValueChanged
     {//GEN-HEADEREND:event_iniListValueChanged
-        final File newFile=new File(directory, iniList.getSelectedValue());
+        final File newFile=new File(iniDirectory, iniList.getSelectedValue());
 
         if((ini.getFile()==null)||!ini.getFile().equals(newFile))
         {
@@ -1031,6 +1182,7 @@ public class SqluxMenu extends javax.swing.JFrame
             }
             catch(final Exception e)
             {
+                e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -1038,7 +1190,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveAsMenuItemActionPerformed
     {//GEN-HEADEREND:event_saveAsMenuItemActionPerformed
-        final File newFile=openFile(JFileChooser.FILES_ONLY,directory);
+        final File newFile=openFile(JFileChooser.FILES_ONLY,iniDirectory);
 
         if(newFile!=null)
         {
@@ -1089,110 +1241,91 @@ public class SqluxMenu extends javax.swing.JFrame
 
         serial3TextField.setText(newFile.getPath());    }//GEN-LAST:event_ser3SelectButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        boolean help=false;
+    private void selectIOROMButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_selectIOROMButtonActionPerformed
+    {//GEN-HEADEREND:event_selectIOROMButtonActionPerformed
+        final File ioROM=openFile(JFileChooser.FILES_ONLY,new File(romDirectoryTextField.getText()));
 
-        for(int i=0; i<args.length; i++)
+        if(ioROM==null)
+            sysRomTextField.setText("");
+        else
         {
-            if((args[i].equals("-d")||(args[i].equals("--dir")))&&(i+1<args.length))
-            {
-                directory=new File(args[++i]);
-            }
-            else if((args[i].equals("-s")||(args[i].equals("--sqlux")))&&(i+1<args.length))
-            {
-                sqlux=new File(args[++i]);
-            }
-            else if((args[i].equals("-h")||(args[i].equals("--help"))))
-                help=true;
-            else
-            {
-                System.err.println("Unknown command line argument: "+args[i]);
-                help=true;
-                break;
-            }
-        }
+            String rom=ioROM.getPath();
 
-        if(help)
-        {
-            System.out.println("sQLuxmenu [-d|--dir config_directory] [-s|--sqlux sqlux_binary_path] [-h|--help]");
-            System.exit(0);
-        }
-
-        if(!sqlux.exists())
-        {
-            System.err.println("sQLux executable not found: "+sqlux);
-            System.exit(1);
-        }
-
-        if(!directory.exists()) directory.mkdirs();
-
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try
-        {
-            for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels())
+            if(!rom.isBlank())
             {
-                if("Nimbus".equals(info.getName()))
+                if(ioROM.length()!=49152)
                 {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+                    JOptionPane.showMessageDialog(this, "Rom '"+ioROM+"' is not 48k!", "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    IORomTextField.setText(ioROM.getPath());
                 }
             }
         }
-        catch(ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch(InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch(IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch(javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(SqluxMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    }//GEN-LAST:event_selectIOROMButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() ->
+    private void selectIORom2ButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_selectIORom2ButtonActionPerformed
+    {//GEN-HEADEREND:event_selectIORom2ButtonActionPerformed
+        final File ioROM=openFile(JFileChooser.FILES_ONLY,new File(romDirectoryTextField.getText()));
+
+        if(ioROM==null)
+            sysRomTextField.setText("");
+        else
         {
-            new SqluxMenu().setVisible(true);
-        });
-    }
+            String rom=ioROM.getPath();
+
+            if(!rom.isBlank())
+            {
+                if(ioROM.length()!=49152)
+                {
+                    JOptionPane.showMessageDialog(this, "Rom '"+ioROM+"' is not 48k!", "Error!", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    IORom2TextField.setText(ioROM.getPath());
+                }
+            }
+        }
+    }//GEN-LAST:event_selectIORom2ButtonActionPerformed
+
+    private void ramTopTextFieldActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ramTopTextFieldActionPerformed
+    {//GEN-HEADEREND:event_ramTopTextFieldActionPerformed
+        try
+        {
+            int z=Integer.parseInt(ramTopTextField.getText());
+
+            if(z<=0) ramTopTextField.setText("256");
+        }
+        catch(final NumberFormatException e)
+        {
+            ramTopTextField.setText("256");
+        }
+    }//GEN-LAST:event_ramTopTextFieldActionPerformed
 
     private void put(final Ini ini, final String key, final String value)
     {
-        if(!value.isBlank()) ini.put(key, value);
+        if(value.isBlank()) ini.remove(key);
+        else ini.put(key, value);
     }
 
     public void fromIni(final Ini ini)
     {
-        sysRomTextField.setText(ini.get("SYSROM"));
-        romDirectoryTextField.setText(ini.get("ROMDIR"));
-        ramTopTextField.setText(ini.get("RAMTOP"));
-        serial1TextField.setText(ini.get("SER1"));
-        serial2TextField.setText(ini.get("SER2"));
-        serial3TextField.setText(ini.get("SER3"));
-        serial4TextField.setText(ini.get("SER4"));
-        printCommandTextField.setText(ini.get("PRINT"));
-        CPUHogCheckBox.setSelected(ini.get("CPU_HOG").equals("1"));
-        fastStartupCheckBox.setSelected(ini.get("FAST_STARTUP").equals("1"));
-        skipBootCheckBox.setSelected(ini.get("SKIP_BOOT").equals("1"));
-        portRomTextField.setText(ini.get("ROMPORT"));
-        IORomTextField.setText(ini.get("IOROM1"));
-        IORom2TextField.setText(ini.get("IOROM2"));
-        noPatchCheckBox.setSelected(ini.get("NO_PATCH").equals("1"));
+        sysRomTextField.setText(ini.get("SYSROM").stream().findAny().orElse(""));
+        romDirectoryTextField.setText(ini.get("ROMDIR").stream().findAny().orElse(""));
+        ramTopTextField.setText(ini.get("RAMTOP").stream().findAny().orElse(""));
+        serial1TextField.setText(ini.get("SER1").stream().findAny().orElse(""));
+        serial2TextField.setText(ini.get("SER2").stream().findAny().orElse(""));
+        serial3TextField.setText(ini.get("SER3").stream().findAny().orElse(""));
+        serial4TextField.setText(ini.get("SER4").stream().findAny().orElse(""));
+        printCommandTextField.setText(ini.get("PRINT").stream().findAny().orElse(""));
+        CPUHogCheckBox.setSelected(ini.has("CPU_HOG")&&ini.get("CPU_HOG").stream().findAny().orElse("").equals("1"));
+        fastStartupCheckBox.setSelected(ini.get("FAST_STARTUP").stream().findAny().orElse("").equals("1"));
+        skipBootCheckBox.setSelected(ini.has("SKIP_BOOT")&&ini.get("SKIP_BOOT").stream().findAny().orElse("").equals("1"));
+        portRomTextField.setText(ini.get("ROMPORT").stream().findAny().orElse(""));
+        IORomTextField.setText(ini.get("IOROM1").stream().findAny().orElse(""));
+        IORom2TextField.setText(ini.get("IOROM2").stream().findAny().orElse(""));
+        noPatchCheckBox.setSelected(ini.has("NO_PATCH")&&ini.get("NO_PATCH").stream().findAny().orElse("").equals("1"));
 
         for(int rc=0;rc<deviceTable.getRowCount();rc++)
         {
@@ -1203,7 +1336,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
         int rc=0;
 
-        for(String device:ini.getAll("DEVICE"))
+        for(String device:ini.get("DEVICE"))
         {
             for(int i=0;i<2;i++)
             {
@@ -1231,16 +1364,18 @@ public class SqluxMenu extends javax.swing.JFrame
                     case "clean" -> deviceTable.setValueAt(true, rc,2);
                     case "qdos-fs" -> deviceTable.setValueAt(true, rc,3);
                     case "native" -> deviceTable.setValueAt(true, rc,4);
-                    case "qdos-line" -> deviceTable.setValueAt(true, rc,5);
+                    case "qdos-like" -> deviceTable.setValueAt(true, rc,5);
                 }
             }
+
+            rc++;
         }
 
-        bdiTextField.setText(ini.get("BDI1"));
+        bdiTextField.setText(ini.get("BDI1").stream().findAny().orElse(""));
 
-        bootDeviceTextField.setText(ini.get("BOOT_DEVICE"));
+        bootDeviceTextField.setText(ini.get("BOOT_DEVICE").stream().findAny().orElse(""));
 
-        if(ini.has("WIN_SIZE")) switch(ini.get("WIN_SIZE"))
+        if(ini.has("WIN_SIZE")) switch(ini.get("WIN_SIZE").stream().findAny().orElse(""))
             {
                 case "1x" ->
                     windowSize1RadioButton.setSelected(true);
@@ -1259,16 +1394,16 @@ public class SqluxMenu extends javax.swing.JFrame
 
         if(ini.has("RESOLUTION"))
         {
-            final String res=ini.get("RESOLUTION");
+            final String res=ini.get("RESOLUTION").stream().findAny().orElse("");
             final int p=res.indexOf("x");
 
             xTextField.setText(p==-1?"":res.substring(0, p).trim());
             yTextField.setText(p==-1?"":res.substring(p+1).trim());
         }
 
-        filterCheckBox.setSelected(ini.get("FILTER").equals("1"));
+        filterCheckBox.setSelected(ini.has("FILTER")&&ini.get("FILTER").equals("1"));
 
-        if(ini.has("FIXASPECT")) switch(ini.get("FIXASPECT"))
+        if(ini.has("FIXASPECT")) switch(ini.get("FIXASPECT").stream().findAny().orElse(""))
             {
                 case "1" ->
                     aspect4x3RadioButton.setSelected(true);
@@ -1279,10 +1414,10 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         else aspect1to1RadioButton.setSelected(true);
 
-        if(ini.has("KBD")) switch(ini.get("KBD"))
+        if(ini.has("KBD")) switch(ini.get("KBD").stream().findAny().orElse(""))
             {
-                case "UK" ->
-                    keyboardUKRadioButton.setSelected(true);
+                case "GB" ->
+                    keyboardGBRadioButton.setSelected(true);
                 case "DE" ->
                     keyboardDERadioButton.setSelected(true);
                 default ->
@@ -1290,12 +1425,12 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         else keyboardUSRadioButton.setSelected(true);
 
-        speedTextField.setText(ini.get("SPEED"));
-        soundTextField.setText(ini.get("SOUND"));
+        speedTextField.setText(ini.get("SPEED").stream().findAny().orElse(""));
+        soundTextField.setText(ini.get("SOUND").stream().findAny().orElse(""));
         // put(ini,"JOY1",...);
         // put(ini,"JOY2",...);
 
-        if(ini.has("PALETTE")) switch(ini.get("PALETTE"))
+        if(ini.has("PALETTE")) switch(ini.get("PALETTE").stream().findAny().orElse(""))
             {
                 case "1" ->
                     paletteMutedjRadioButton.setSelected(true);
@@ -1306,18 +1441,18 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         else paletteBrightRadioButton.setSelected(true);
 
-        if(ini.has("SHADER")) switch(ini.get("SHADER"))
+        if(ini.has("SHADER")) switch(ini.get("SHADER").stream().findAny().orElse(""))
             {
                 case "1" ->
                     shaderFlatjRadioButton.setSelected(true);
                 case "2" ->
                     shaderBarrelRadioButton.setSelected(true);
                 default ->
-                    paletteBrightRadioButton.setSelected(true);
+                    shaderDisabledRadioButton.setSelected(true);
         }
-        else paletteBrightRadioButton.setSelected(true);
+        else shaderDisabledRadioButton.setSelected(true);
 
-        shaderFileTextField.setText(ini.get("SHADER_FILE"));
+        shaderFileTextField.setText(ini.get("SHADER_FILE").stream().findAny().orElse(""));
     }
 
     public void toIni(final Ini ini)
@@ -1333,18 +1468,31 @@ public class SqluxMenu extends javax.swing.JFrame
         put(ini, "SER3", this.serial3TextField.getText());
         put(ini, "SER4", this.serial4TextField.getText());
         put(ini, "PRINT", this.printCommandTextField.getText());
-        put(ini, "CPU_HOG", this.CPUHogCheckBox.isSelected()?"1":"0");
+
+        if(this.CPUHogCheckBox.isSelected())
+            put(ini,"CPU_HOG","1");
+        else put(ini, "CPU_HOG","0");
+
+
         put(ini, "FAST_STARTUP", this.fastStartupCheckBox.isSelected()?"1":"0");
-        put(ini, "SKIP_BOOT", this.skipBootCheckBox.isSelected()?"1":"0");
+
+        if(this.skipBootCheckBox.isSelected())
+            put(ini, "SKIP_BOOT","1");
+        else ini.remove("SKIP_BOOT");
+
         put(ini, "ROMPORT", this.portRomTextField.getText());
         put(ini, "IOROM1", this.IORomTextField.getText());
         put(ini, "IOROM2", this.IORom2TextField.getText());
-        put(ini, "NO_PATCH", this.noPatchCheckBox.isSelected()?"1":"0");
+
+        if(this.noPatchCheckBox.isSelected())
+            put(ini, "NO_PATCH","1");
+        else ini.remove("NO_PATCH");
+
         put(ini, "BDI1",this.bdiTextField.getText());
         put(ini, "BOOT_DEVICE", bootDeviceTextField.getText());
 
         if(windowSize1RadioButton.isSelected())
-            put(ini, "WIN_SIZE", "1x");
+            ini.remove("WIN_SIZE");
         else if(windowSize2RadioButton.isSelected())
             put(ini, "WIN_SIZE", "2x");
         else if(windowSize3RadioButton.isSelected())
@@ -1357,25 +1505,32 @@ public class SqluxMenu extends javax.swing.JFrame
         if(!this.xTextField.getText().isBlank()&&!this.yTextField.getText().isBlank())
             put(ini, "RESOLUTION", this.xTextField.getText()+"x"+this.yTextField.getText());
 
-        put(ini, "FILTER", this.filterCheckBox.isSelected()?"1":"0");
+        if(filterCheckBox.isSelected())
+            put(ini, "FILTER","1");
+        else ini.remove("FILTER");
 
         if(aspect1to1RadioButton.isSelected())
-            put(ini, "FIXASPECT", "0");
+            ini.remove("FIXASPECT");
         else if(aspect4x3RadioButton.isSelected())
             put(ini, "FIXASPECT", "1");
         else if(aspectQLRadioButton.isSelected())
             put(ini, "FIXASPECT", "2");
 
-        if(keyboardUKRadioButton.isSelected()) put(ini, "KBD", "UK");
+        if(keyboardGBRadioButton.isSelected()) put(ini, "KBD", "GB");
         else if(keyboardDERadioButton.isSelected()) put(ini, "KBD", "DE");
         else if(keyboardUSRadioButton.isSelected()) put(ini, "KBD", "");
 
-        put(ini, "SPEED", speedTextField.getText());
+        put(ini, "SOUND", soundTextField.getText());
+        if(speedTextField.getText().equals("0")
+        ||speedTextField.getText().equals("0.0")
+        ||speedTextField.getText().isBlank())
+            ini.remove("SPEED");
+        else put(ini, "SPEED", speedTextField.getText());
 
         // put(ini,"JOY1",...);
         // put(ini,"JOY2",...);
-        if(paletteBrightRadioButton.isSelected()) put(ini, "PALETTE", "");
-        else if(paletteBrightRadioButton.isSelected()) put(ini, "PALETTE", "1");
+        if(paletteBrightRadioButton.isSelected()) ini.remove("PALETTE");
+        else if(paletteMutedjRadioButton.isSelected()) put(ini, "PALETTE", "1");
         else if(paletteGreyscaleRadioButton.isSelected()) put(ini, "PALETTE", "2");
 
         if(shaderDisabledRadioButton.isSelected()) put(ini, "SHADER", "");
@@ -1389,13 +1544,15 @@ public class SqluxMenu extends javax.swing.JFrame
             final StringBuilder d=new StringBuilder();
 
             d.append(deviceTable.getValueAt(r,0));
-            if(d.isEmpty()) continue;
+            if(d.toString().equals("null")||d.isEmpty()) continue;
             d.append(",").append(deviceTable.getValueAt(r,1));
 
             if((deviceTable.getValueAt(r,2)!=null)&&(Boolean)deviceTable.getValueAt(r,2)) d.append(",clean");
             if((deviceTable.getValueAt(r,3)!=null)&&(Boolean)deviceTable.getValueAt(r,3)) d.append(",qdos-fs");
             if((deviceTable.getValueAt(r,4)!=null)&&(Boolean)deviceTable.getValueAt(r,4)) d.append(",native");
             if((deviceTable.getValueAt(r,5)!=null)&&(Boolean)deviceTable.getValueAt(r,5)) d.append(",qdos-like");
+
+            System.out.println("DEVICE='"+d.toString()+"'");
 
             put(ini,"DEVICE",d.toString());
         }
@@ -1408,7 +1565,7 @@ public class SqluxMenu extends javax.swing.JFrame
 
     public File openFile()
     {
-        return openFile(JFileChooser.FILES_ONLY,directory);
+        return openFile(JFileChooser.FILES_ONLY,iniDirectory);
     }
 
     public enum FileMode
@@ -1439,7 +1596,7 @@ public class SqluxMenu extends javax.swing.JFrame
         {
             this.clear();
 
-            for(File file : directory.listFiles((File file, String string) -> string.endsWith(".ini")))
+            for(File file : iniDirectory.listFiles((File file, String string) -> string.endsWith(".ini")))
             {
                 this.add(this.size(), file.getName());
             }
@@ -1496,7 +1653,7 @@ public class SqluxMenu extends javax.swing.JFrame
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.ButtonGroup keyboardButtonGroup;
     private javax.swing.JRadioButton keyboardDERadioButton;
-    private javax.swing.JRadioButton keyboardUKRadioButton;
+    private javax.swing.JRadioButton keyboardGBRadioButton;
     private javax.swing.JRadioButton keyboardUSRadioButton;
     private javax.swing.JCheckBox noPatchCheckBox;
     private javax.swing.JMenuItem openMenuItem;

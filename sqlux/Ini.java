@@ -37,17 +37,9 @@ public class Ini
         load();
     }
 
-    public String get(final String key)
+    public Collection<String> get(final String key)
     {
-        final Collection<String> stuff=data.get(key);
-
-        if(stuff.size()==1) return stuff.stream().findAny().get();
-        else return null;
-    }
-
-    public List<String> getAll(final String key)
-    {
-        return new ArrayList<>(data.get(key));
+        return data.get(key);
     }
 
     public boolean has(final String key)
@@ -97,7 +89,7 @@ public class Ini
         if(!filename.exists()) throw new FileNotFoundException(filename.getAbsolutePath());
         else if(!filename.canRead()) throw new IOException("File unreadable: "+filename.getAbsolutePath());
 
-        this.filename=filename;
+        //this.filename=filename;
 
         data.clear();
         modified=false;
@@ -137,11 +129,12 @@ public class Ini
 
             for(final String key:data.keySet())
             {
-                String datum=get(key);
-
-                if(datum.startsWith("*"))
-                    out.println("# "+key+" = "+datum.substring(1));
-                else out.println(key+" = "+datum);
+                for(String datum:get(key))
+                {
+                    if(datum.startsWith("*"))
+                        out.println("# "+key+" = "+datum.substring(1));
+                    else out.println(key+" = "+datum);
+                }
             }
         }
 
