@@ -96,17 +96,16 @@ public class Ini
 
         try(final BufferedReader in=new BufferedReader(new FileReader(filename)))
         {
-            for(String buffer=in.readLine();buffer!=null;buffer=in.readLine())
+            for(String buffer=in.readLine().trim();buffer!=null;buffer=in.readLine())
             {
-                if(buffer.isBlank()) continue;
-
-                final boolean silent=buffer.startsWith("#");
-                if(silent) buffer=buffer.substring(1).trim();
+                buffer=buffer.trim();
+                
+                if(buffer.isBlank()||buffer.startsWith("#")) continue;
 
                 final int p=buffer.indexOf("=");
                 if(p==-1) // No equals...
                 {
-                    if(!silent) throw new IOException("Misformed ini line in '"+filename+"': '"+buffer+"'");
+                    throw new IOException("Misformed ini line in '"+filename+"': '"+buffer+"'");
                 }
                 else
                 {
@@ -127,7 +126,11 @@ public class Ini
         {
             out.println("# sQLux configuration file\n");
 
-            for(final String key:data.keySet())
+            final List<String> keys=new ArrayList<>(data.keySet());
+
+            keys.sort(String::compareTo);
+
+            for(final String key:keys)
             {
                 for(String datum:get(key))
                 {

@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -223,6 +222,7 @@ public class SqluxMenu extends javax.swing.JFrame
         shaderBarrelRadioButton = new javax.swing.JRadioButton();
         shaderFileTextField = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
+        strictLockCheckBox = new javax.swing.JCheckBox();
         romPanel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -261,6 +261,12 @@ public class SqluxMenu extends javax.swing.JFrame
         bootDeviceTextField = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         bdiTextField = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        joy2TextField = new javax.swing.JTextField();
+        joy1TextField = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        bootCommandTextField = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         iniList = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -411,6 +417,15 @@ public class SqluxMenu extends javax.swing.JFrame
 
         jLabel23.setText("Shader file:");
 
+        strictLockCheckBox.setText("Stick lock");
+        strictLockCheckBox.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                strictLockCheckBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout hardwarePanelLayout = new javax.swing.GroupLayout(hardwarePanel);
         hardwarePanel.setLayout(hardwarePanelLayout);
         hardwarePanelLayout.setHorizontalGroup(
@@ -438,16 +453,6 @@ public class SqluxMenu extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(hardwarePanelLayout.createSequentialGroup()
-                                        .addComponent(shaderDisabledRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(shaderFlatjRadioButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(shaderBarrelRadioButton)
-                                        .addGap(55, 55, 55)
-                                        .addComponent(jLabel23)
-                                        .addGap(2, 2, 2)
-                                        .addComponent(shaderFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(hardwarePanelLayout.createSequentialGroup()
                                         .addComponent(paletteBrightRadioButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(paletteMutedjRadioButton)
@@ -461,7 +466,20 @@ public class SqluxMenu extends javax.swing.JFrame
                                         .addComponent(keyboardUSRadioButton))
                                     .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(soundTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(speedTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)))))
+                                        .addComponent(speedTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                                    .addGroup(hardwarePanelLayout.createSequentialGroup()
+                                        .addComponent(shaderDisabledRadioButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(shaderFlatjRadioButton)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(shaderBarrelRadioButton)
+                                        .addGap(55, 55, 55)
+                                        .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(strictLockCheckBox)
+                                            .addGroup(hardwarePanelLayout.createSequentialGroup()
+                                                .addComponent(jLabel23)
+                                                .addGap(2, 2, 2)
+                                                .addComponent(shaderFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                         .addGap(0, 11, Short.MAX_VALUE))
                     .addGroup(hardwarePanelLayout.createSequentialGroup()
                         .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,7 +536,8 @@ public class SqluxMenu extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CPUHogCheckBox)
-                    .addComponent(fastStartupCheckBox))
+                    .addComponent(fastStartupCheckBox)
+                    .addComponent(strictLockCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(hardwarePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(skipBootCheckBox)
@@ -785,6 +804,12 @@ public class SqluxMenu extends javax.swing.JFrame
 
         jLabel24.setText("BDI file:");
 
+        jLabel25.setText("Joy 1:");
+
+        jLabel26.setText("Joy 2:");
+
+        jLabel27.setText("Boot command:");
+
         javax.swing.GroupLayout devicesPanelLayout = new javax.swing.GroupLayout(devicesPanel);
         devicesPanel.setLayout(devicesPanelLayout);
         devicesPanelLayout.setHorizontalGroup(
@@ -792,17 +817,6 @@ public class SqluxMenu extends javax.swing.JFrame
             .addGroup(devicesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(devicesPanelLayout.createSequentialGroup()
-                        .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel21)
-                            .addComponent(jLabel22))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(printCommandTextField)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
-                            .addComponent(bootDeviceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bdiTextField)))
                     .addGroup(devicesPanelLayout.createSequentialGroup()
                         .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(devicesPanelLayout.createSequentialGroup()
@@ -825,7 +839,30 @@ public class SqluxMenu extends javax.swing.JFrame
                                     .addComponent(ser3SelectButton)
                                     .addComponent(ser4SelectButton)))
                             .addComponent(jLabel24))
-                        .addGap(170, 170, 170)))
+                        .addGap(170, 170, 170))
+                    .addGroup(devicesPanelLayout.createSequentialGroup()
+                        .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel25)
+                            .addComponent(jLabel26))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(printCommandTextField)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                            .addComponent(bdiTextField)
+                            .addGroup(devicesPanelLayout.createSequentialGroup()
+                                .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(joy2TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(joy1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(devicesPanelLayout.createSequentialGroup()
+                                .addComponent(bootDeviceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(63, 63, 63)
+                                .addComponent(jLabel27)
+                                .addGap(18, 18, 18)
+                                .addComponent(bootCommandTextField)))))
                 .addContainerGap())
         );
         devicesPanelLayout.setVerticalGroup(
@@ -862,12 +899,23 @@ public class SqluxMenu extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(bootDeviceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bootDeviceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27)
+                    .addComponent(bootCommandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(bdiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25)
+                    .addGroup(devicesPanelLayout.createSequentialGroup()
+                        .addComponent(joy1TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addGroup(devicesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(joy2TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel26))))
+                .addContainerGap(269, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Devices", devicesPanel);
@@ -1054,7 +1102,7 @@ public class SqluxMenu extends javax.swing.JFrame
                             if(++c>2)
                             {
                                 if(!error.isEmpty()) error.append(buffer);
-                                error.append("\n"+buffer);
+                                error.append("\n").append(buffer);
                             }
 
                             System.out.println(buffer);
@@ -1075,7 +1123,7 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         catch(final Exception e)
         {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_runButtonActionPerformed
@@ -1104,9 +1152,9 @@ public class SqluxMenu extends javax.swing.JFrame
                 {
                     JOptionPane.showMessageDialog(this, "Rom '"+portRom+"' is not 16k!", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
-                else if(rom.startsWith(romDir))
+                else // if(rom.startsWith(romDir))
                 {
-                    portRomTextField.setText(rom.substring(romDir.length()+1));
+                    portRomTextField.setText(portRom.getAbsolutePath());
                 }
             }
         }
@@ -1127,11 +1175,11 @@ public class SqluxMenu extends javax.swing.JFrame
             {
                 if(sysRom.length()!=49152)
                 {
-                    JOptionPane.showMessageDialog(this, "Rom '"+sysRom+"' is not 48k!", "Error!", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Rom '"+sysRom+"' is not 48k! (It's "+sysRom.length()+")", "Error!", JOptionPane.ERROR_MESSAGE);
                 }
-                else if(rom.startsWith(romDir))
+                else //if(rom.startsWith(romDir))
                 {
-                    sysRomTextField.setText(rom.substring(romDir.length()+1));
+                    sysRomTextField.setText(sysRom.getAbsolutePath());
                 }
             }
         }
@@ -1154,7 +1202,7 @@ public class SqluxMenu extends javax.swing.JFrame
             }
             catch(final Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace(System.out);
                 JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -1182,7 +1230,7 @@ public class SqluxMenu extends javax.swing.JFrame
             }
             catch(final Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace(System.out);
                 JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -1208,7 +1256,7 @@ public class SqluxMenu extends javax.swing.JFrame
             }
             catch(final Exception e)
             {
-                e.printStackTrace();
+                e.printStackTrace(System.out);
                 JOptionPane.showMessageDialog(this, "Error: "+e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -1303,6 +1351,11 @@ public class SqluxMenu extends javax.swing.JFrame
         }
     }//GEN-LAST:event_ramTopTextFieldActionPerformed
 
+    private void strictLockCheckBoxActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_strictLockCheckBoxActionPerformed
+    {//GEN-HEADEREND:event_strictLockCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_strictLockCheckBoxActionPerformed
+
     private void put(final Ini ini, final String key, final String value)
     {
         if(value.isBlank()) ini.remove(key);
@@ -1321,11 +1374,12 @@ public class SqluxMenu extends javax.swing.JFrame
         printCommandTextField.setText(ini.get("PRINT").stream().findAny().orElse(""));
         CPUHogCheckBox.setSelected(ini.has("CPU_HOG")&&ini.get("CPU_HOG").stream().findAny().orElse("").equals("1"));
         fastStartupCheckBox.setSelected(ini.get("FAST_STARTUP").stream().findAny().orElse("").equals("1"));
-        skipBootCheckBox.setSelected(ini.has("SKIP_BOOT")&&ini.get("SKIP_BOOT").stream().findAny().orElse("").equals("1"));
+        skipBootCheckBox.setSelected(ini.has("SKIP_BOOT")&&!ini.get("SKIP_BOOT").stream().findAny().orElse("").equals("0"));
         portRomTextField.setText(ini.get("ROMPORT").stream().findAny().orElse(""));
         IORomTextField.setText(ini.get("IOROM1").stream().findAny().orElse(""));
         IORom2TextField.setText(ini.get("IOROM2").stream().findAny().orElse(""));
         noPatchCheckBox.setSelected(ini.has("NO_PATCH")&&ini.get("NO_PATCH").stream().findAny().orElse("").equals("1"));
+        strictLockCheckBox.setSelected(ini.has("STRICT_LOCK")&&ini.get("STRICT_LOCK").stream().findAny().orElse("").equals("1"));
 
         for(int rc=0;rc<deviceTable.getRowCount();rc++)
         {
@@ -1384,9 +1438,9 @@ public class SqluxMenu extends javax.swing.JFrame
                 case "3x" ->
                     windowSize3RadioButton.setSelected(true);
                 case "max" ->
-                    windowSizeFullRadioButton.setSelected(true);
-                case "full" ->
                     windowSizeMaxRadioButton.setSelected(true);
+                case "full" ->
+                    windowSizeFullRadioButton.setSelected(true);
                 default ->
                     windowSize1RadioButton.setSelected(true);
         }
@@ -1401,7 +1455,7 @@ public class SqluxMenu extends javax.swing.JFrame
             yTextField.setText(p==-1?"":res.substring(p+1).trim());
         }
 
-        filterCheckBox.setSelected(ini.has("FILTER")&&ini.get("FILTER").equals("1"));
+        filterCheckBox.setSelected(ini.has("FILTER")&&ini.get("FILTER").stream().findAny().get().equals("1"));
 
         if(ini.has("FIXASPECT")) switch(ini.get("FIXASPECT").stream().findAny().orElse(""))
             {
@@ -1441,6 +1495,10 @@ public class SqluxMenu extends javax.swing.JFrame
         }
         else paletteBrightRadioButton.setSelected(true);
 
+        if(ini.has("BOOT_CMD")) bootCommandTextField.setText(ini.get("BOOT_CMD").stream().findAny().get());
+        if(ini.has("JOY1")) joy1TextField.setText(ini.get("JOY1").stream().findAny().get());
+        if(ini.has("JOY2")) joy2TextField.setText(ini.get("JOY2").stream().findAny().get());
+
         if(ini.has("SHADER")) switch(ini.get("SHADER").stream().findAny().orElse(""))
             {
                 case "1" ->
@@ -1469,6 +1527,43 @@ public class SqluxMenu extends javax.swing.JFrame
         put(ini, "SER4", this.serial4TextField.getText());
         put(ini, "PRINT", this.printCommandTextField.getText());
 
+        if(this.bootDeviceTextField.getText().isBlank())
+            ini.remove("BOOT_CMD");
+        else put(ini,"BOOT_CMD",this.bootDeviceTextField.getText());
+
+        if(this.joy1TextField.getText().isBlank())
+            ini.remove("JOY1");
+        else try
+        {
+            int j=Integer.parseInt(this.joy1TextField.getText());
+
+            if((j>=1)&&(j<=8)) put(ini,"JOY1",Integer.toString(j));
+        }
+        catch(final NumberFormatException e)
+        {
+            ini.remove("JOY1");
+            joy1TextField.setText("");
+        }
+
+
+        if(this.joy2TextField.getText().isBlank())
+            ini.remove("JOY2");
+        else try
+        {
+            int j=Integer.parseInt(this.joy2TextField.getText());
+
+            if((j>=1)&&(j<=8)) put(ini,"JOY2",Integer.toString(j));
+        }
+        catch(final NumberFormatException e)
+        {
+            ini.remove("JOY2");
+            joy2TextField.setText("");
+        }
+
+        if(this.strictLockCheckBox.isSelected())
+            put(ini, "STRICT_LOCK","1");
+        else ini.remove("STRICT_LOCK");
+
         if(this.CPUHogCheckBox.isSelected())
             put(ini,"CPU_HOG","1");
         else put(ini, "CPU_HOG","0");
@@ -1476,8 +1571,8 @@ public class SqluxMenu extends javax.swing.JFrame
 
         put(ini, "FAST_STARTUP", this.fastStartupCheckBox.isSelected()?"1":"0");
 
-        if(this.skipBootCheckBox.isSelected())
-            put(ini, "SKIP_BOOT","1");
+        if(!this.skipBootCheckBox.isSelected())
+            put(ini, "SKIP_BOOT","0");
         else ini.remove("SKIP_BOOT");
 
         put(ini, "ROMPORT", this.portRomTextField.getText());
@@ -1568,17 +1663,19 @@ public class SqluxMenu extends javax.swing.JFrame
         return openFile(JFileChooser.FILES_ONLY,iniDirectory);
     }
 
-    public enum FileMode
-    {
-        FILE,DIRECTORY;
-    }
-
     public File openFile(final int mode,final File dir)
     {
         final JFileChooser fileChooser=new JFileChooser(dir);
+
         fileChooser.setFileSelectionMode(mode);
-        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        fileChooser.setFileHidingEnabled(false);
+
+        final int result=fileChooser.showOpenDialog(this);
+
+        if(result==JFileChooser.APPROVE_OPTION)
+        {
             return fileChooser.getSelectedFile();
+        }
         else return null;
     }
 
@@ -1612,6 +1709,7 @@ public class SqluxMenu extends javax.swing.JFrame
     private javax.swing.ButtonGroup aspectButtonGroup;
     private javax.swing.JRadioButton aspectQLRadioButton;
     private javax.swing.JTextField bdiTextField;
+    private javax.swing.JTextField bootCommandTextField;
     private javax.swing.JTextField bootDeviceTextField;
     private javax.swing.JTable deviceTable;
     private javax.swing.JPanel devicesPanel;
@@ -1636,6 +1734,9 @@ public class SqluxMenu extends javax.swing.JFrame
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1651,6 +1752,8 @@ public class SqluxMenu extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField joy1TextField;
+    private javax.swing.JTextField joy2TextField;
     private javax.swing.ButtonGroup keyboardButtonGroup;
     private javax.swing.JRadioButton keyboardDERadioButton;
     private javax.swing.JRadioButton keyboardGBRadioButton;
@@ -1690,6 +1793,7 @@ public class SqluxMenu extends javax.swing.JFrame
     private javax.swing.JCheckBox skipBootCheckBox;
     private javax.swing.JTextField soundTextField;
     private javax.swing.JTextField speedTextField;
+    private javax.swing.JCheckBox strictLockCheckBox;
     private javax.swing.JButton sysRomDirectoryButton;
     private javax.swing.JTextField sysRomTextField;
     private javax.swing.JRadioButton windowSize1RadioButton;
