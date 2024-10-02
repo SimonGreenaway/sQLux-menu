@@ -18,6 +18,8 @@ Alternatives set the following environment variables:
       SQLUXINI = directory containing .ini files 
       SQLUX = full path to sqlux binary
 
+The config directory and binary can path can also be changed in the GUI. The binary path is stored in each ini file,
+allowing different ini files  to run different sqlux binaries. 
 
 ![image](https://github.com/user-attachments/assets/ef7096cd-2d6b-4ff0-ba12-31146a0cbc4a)
 ![image](https://github.com/user-attachments/assets/272df794-eb72-489f-adb1-96993aa92e74)
