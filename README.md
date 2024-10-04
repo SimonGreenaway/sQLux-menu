@@ -21,6 +21,7 @@ Alternatives set the following environment variables:
 The config directory and binary can path can also be changed in the GUI. The binary path is stored in each ini file,
 allowing different ini files  to run different sqlux binaries. 
 
-![image](https://github.com/user-attachments/assets/ef7096cd-2d6b-4ff0-ba12-31146a0cbc4a)
-![image](https://github.com/user-attachments/assets/272df794-eb72-489f-adb1-96993aa92e74)
-![image](https://github.com/user-attachments/assets/852066d6-8713-471a-8e7a-48d3874a22e3)
+![image](https://github.com/user-attachments/assets/42289b59-d5f2-4245-9ee4-5bd5e6d2915e)
+![image](https://github.com/user-attachments/assets/3b469465-46a8-4fbf-a74d-683f74ccdc6e)
+![image](https://github.com/user-attachments/assets/5737452c-8987-4a78-8063-1b6b409ff22e)
+![image](https://github.com/user-attachments/assets/927e68a3-6c20-4495-b80e-bc7b0f4d5635)
