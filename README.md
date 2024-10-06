@@ -8,7 +8,7 @@ To run (java version 17+):
 
 Arguments:
 
-      sQLuxmenu [-d|--dir config_directory] [-i initial.ini] [-s|--sqlux sqlux_binary_path] [-h|--help]
+      sQLuxmenu [-d|--dir config_directory] [-i initial.ini] [-s|--sqlux sqlux_binary_path] [-v|--version] [-h|--help]
 
 'config_directory' is where the .ini files are stored.
 'initial.ini' is a ini file to load on startup from the giden config_directory.
