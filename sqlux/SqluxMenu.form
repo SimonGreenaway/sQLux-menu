@@ -12,6 +12,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="shaderButtonGroup">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="verbosityButtonGroup">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -49,6 +51,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Edit"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Change .ini directory"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="showHiddenFilesCheckBoxMenuItem">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Show hidden files"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>
@@ -77,8 +95,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jScrollPane3" max="32767" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" min="-2" pref="229" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -97,18 +115,25 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+            <BevelBorder/>
+          </Border>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
-              <Component id="jTabbedPane1" alignment="0" pref="772" max="32767" attributes="0"/>
+              <Component id="miscTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  <Component id="miscTabbedPane" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
               </Group>
@@ -124,6 +149,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="saveButton" min="-2" pref="86" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="saveRunButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="runButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -136,6 +163,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="runButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="saveRunButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -158,13 +186,24 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="runButtonActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JButton" name="saveRunButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Save and Run!"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveRunButtonActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+        <Container class="javax.swing.JTabbedPane" name="miscTabbedPane">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="hardwarePanel">
+              <Properties>
+                <Property name="toolTipText" type="java.lang.String" value="volume in range 1-8, 0 to disable"/>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Hardware">
@@ -179,6 +218,69 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="skipBootCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="CPUHogCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="ramTopTextField" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="noPatchCheckBox" min="-2" pref="102" max="-2" attributes="0"/>
+                                                      <Component id="fastStartupCheckBox" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="windowSize1RadioButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="xTextField" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="windowSize2RadioButton" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="windowSize3RadioButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="yTextField" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="windowSizeMaxRadioButton" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="windowSizeFullRadioButton" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                                  <Component id="filterCheckBox" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace pref="403" max="32767" attributes="0"/>
+                              </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -227,77 +329,20 @@
                                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="strictLockCheckBox" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="102" attributes="0">
-                                                          <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                                          <Component id="shaderFileTextField" min="-2" pref="264" max="-2" attributes="0"/>
-                                                      </Group>
+                                                      <Component id="ramSizeTextField" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
                                       </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="skipBootCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="ramTopTextField" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="CPUHogCheckBox" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="noPatchCheckBox" min="-2" pref="102" max="-2" attributes="0"/>
-                                                      <Component id="fastStartupCheckBox" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="windowSize1RadioButton" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="xTextField" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="shaderFileTextField" min="-2" pref="375" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="windowSize2RadioButton" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="windowSize3RadioButton" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="yTextField" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="windowSizeMaxRadioButton" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="windowSizeFullRadioButton" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                                  <Component id="filterCheckBox" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                          <Component id="shaderFileSelectButton" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -310,6 +355,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="ramTopTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ramSizeTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -376,10 +423,14 @@
                               <Component id="shaderDisabledRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="shaderFlatjRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="shaderBarrelRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="shaderFileTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="377" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="shaderFileTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="shaderFileSelectButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="329" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -388,40 +439,49 @@
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ramtop:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="The memory space top (128K + QL ram)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="ramTopTextField">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="1024"/>
+                    <Property name="text" type="java.lang.String" value="256"/>
+                    <Property name="toolTipText" type="java.lang.String" value="The memory space top (128K + QL ram)"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="ramTopTextFieldFocusLost"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ramTopTextFieldActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="CPUHogCheckBox">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="CPU hog"/>
+                    <Property name="toolTipText" type="java.lang.String" value="1 = use all cpu, 0 = sleep when idle"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="fastStartupCheckBox">
                   <Properties>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Fast startup"/>
+                    <Property name="toolTipText" type="java.lang.String" value="1 = skip ram test (does not affect Minerva)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="skipBootCheckBox">
                   <Properties>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Skip boot"/>
+                    <Property name="toolTipText" type="java.lang.String" value="1 = skip f1/f2 screen, 0 = show f1/f2 screen"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="noPatchCheckBox">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="No patch"/>
+                    <Property name="toolTipText" type="java.lang.String" value="disable patching the rom"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Window size:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="windowSize1RadioButton">
@@ -431,6 +491,7 @@
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="x1"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="windowSize2RadioButton">
@@ -439,6 +500,7 @@
                       <ComponentRef name="windowSizeButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="x2"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="windowSize3RadioButton">
@@ -447,6 +509,7 @@
                       <ComponentRef name="windowSizeButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="x3"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="windowSizeMaxRadioButton">
@@ -455,6 +518,7 @@
                       <ComponentRef name="windowSizeButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Max"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="windowSizeFullRadioButton">
@@ -463,14 +527,19 @@
                       <ComponentRef name="windowSizeButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Full"/>
+                    <Property name="toolTipText" type="java.lang.String" value="window size"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Resolution:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="resolution of screen in mode 4"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="xTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="resolution of screen in mode 4"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel4">
                   <Properties>
@@ -478,15 +547,20 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="yTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="resolution of screen in mode 4"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="filterCheckBox">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Filter"/>
+                    <Property name="toolTipText" type="java.lang.String" value="enable bilinear filter when zooming"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel5">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Fix aspect:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = 1:1 pixel mapping, 1 = 2:3 non square pixels, 2 = BBQL aspect non squar e pixels"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="aspect4x3RadioButton">
@@ -495,6 +569,7 @@
                       <ComponentRef name="aspectButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="4:3"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = 1:1 pixel mapping, 1 = 2:3 non square pixels, 2 = BBQL aspect non squar e pixels"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="aspectQLRadioButton">
@@ -503,6 +578,7 @@
                       <ComponentRef name="aspectButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="QL"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = 1:1 pixel mapping, 1 = 2:3 non square pixels, 2 = BBQL aspect non squar e pixels"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="aspect1to1RadioButton">
@@ -512,11 +588,13 @@
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="1:1"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = 1:1 pixel mapping, 1 = 2:3 non square pixels, 2 = BBQL aspect non squar e pixels"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Keyboard:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="keyboard language DE, GB, ES, US"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="keyboardGBRadioButton">
@@ -524,8 +602,8 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="keyboardButtonGroup"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="GB"/>
+                    <Property name="toolTipText" type="java.lang.String" value="keyboard language DE, GB, ES, US"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="keyboardDERadioButton">
@@ -534,6 +612,7 @@
                       <ComponentRef name="keyboardButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="DE"/>
+                    <Property name="toolTipText" type="java.lang.String" value="keyboard language DE, GB, ES, US"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="keyboardUSRadioButton">
@@ -541,37 +620,47 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="keyboardButtonGroup"/>
                     </Property>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="US"/>
+                    <Property name="toolTipText" type="java.lang.String" value="keyboard language DE, GB, ES, US"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel7">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Speed:  x"/>
+                    <Property name="toolTipText" type="java.lang.String" value="speed in factor of BBQL speed, 0.0 for full speed"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="speedTextField">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="1"/>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="speed in factor of BBQL speed, 0.0 for full speed"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="speedTextFieldActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Sound:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="volume in range 1-8, 0 to disable"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="soundTextField">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="4"/>
+                    <Property name="toolTipText" type="java.lang.String" value="volume in range 1-8, 0 to disable"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Palette:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Full colour, 1 = Unsaturated colours (slightly more CRT like), 2 =  Enabl e grayscale display"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Shader:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Disabled, 1 = Use flat shader, 2 = Use curved shader"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="paletteBrightRadioButton">
@@ -581,6 +670,7 @@
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Bright"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Full colour, 1 = Unsaturated colours (slightly more CRT like), 2 =  Enabl e grayscale display"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="paletteMutedjRadioButton">
@@ -589,6 +679,7 @@
                       <ComponentRef name="paletteButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Muted"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Full colour, 1 = Unsaturated colours (slightly more CRT like), 2 =  Enabl e grayscale display"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="paletteGreyscaleRadioButton">
@@ -597,6 +688,7 @@
                       <ComponentRef name="paletteButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Greyscale"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Full colour, 1 = Unsaturated colours (slightly more CRT like), 2 =  Enabl e grayscale display"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="shaderDisabledRadioButton">
@@ -606,6 +698,7 @@
                     </Property>
                     <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Disabled"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Disabled, 1 = Use flat shader, 2 = Use curved shader"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="shaderFlatjRadioButton">
@@ -614,6 +707,7 @@
                       <ComponentRef name="shaderButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Flat"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Disabled, 1 = Use flat shader, 2 = Use curved shader"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JRadioButton" name="shaderBarrelRadioButton">
@@ -622,21 +716,52 @@
                       <ComponentRef name="shaderButtonGroup"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Barrel distortion"/>
+                    <Property name="toolTipText" type="java.lang.String" value="0 = Disabled, 1 = Use flat shader, 2 = Use curved shader"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="shaderFileTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Path to shader file to use if SHADER is 1 or 2"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel23">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Shader file:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Path to shader file to use if SHADER is 1 or 2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="strictLockCheckBox">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Stick lock"/>
+                    <Property name="text" type="java.lang.String" value="Strict lock"/>
+                    <Property name="toolTipText" type="java.lang.String" value="enable strict file locking"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="strictLockCheckBoxActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel28">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="or Ramsize:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="The size of ram"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="ramSizeTextField">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="128"/>
+                    <Property name="toolTipText" type="java.lang.String" value="The size of ram"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="ramSizeTextFieldFocusLost"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ramSizeTextFieldActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="shaderFileSelectButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Choose"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Path to shader file to use if SHADER is 1 or 2"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="shaderFileSelectButtonActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -685,7 +810,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="180" max="32767" attributes="0"/>
+                          <EmptySpace pref="196" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -722,7 +847,7 @@
                               <Component id="IORom2TextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="546" max="32767" attributes="0"/>
+                          <EmptySpace pref="540" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -731,18 +856,24 @@
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="System rom:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="system rom"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Rom directory:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="path to the roms"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="romDirectoryTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="path to the roms"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="selectRomDirectoryButton1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="path to the roms"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectRomDirectoryButton1ActionPerformed"/>
@@ -751,23 +882,32 @@
                 <Component class="javax.swing.JLabel" name="jLabel18">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Port rom:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in QL rom port (0xC000 address"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="portRomTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in QL rom port (0xC000 address"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="selectPortRomButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in QL rom port (0xC000 address"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectPortRomButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="IORomTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 1st IO area (Minerva only 0x10000 address)"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="selectIORom2Button">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 2nd IO area (Minerva only 0x14000 address)"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectIORom2ButtonActionPerformed"/>
@@ -776,28 +916,38 @@
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="IO Rom:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 1st IO area (Minerva only 0x10000 address)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="selectIOROMButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 1st IO area (Minerva only 0x10000 address)"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="selectIOROMButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="IORom2TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 2nd IO area (Minerva only 0x14000 address)"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel20">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="IO Rom2:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="rom in 2nd IO area (Minerva only 0x14000 address)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="sysRomTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="system rom"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="sysRomDirectoryButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="system rom"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sysRomDirectoryButtonActionPerformed"/>
@@ -820,50 +970,27 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="serial1TextField" pref="435" max="32767" attributes="0"/>
-                                              <Component id="serial4TextField" pref="435" max="32767" attributes="0"/>
-                                              <Component id="serial3TextField" max="32767" attributes="0"/>
-                                              <Component id="serial2TextField" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="ser1SelectButton" min="-2" max="-2" attributes="0"/>
-                                              <Component id="ser2SelectButton" min="-2" max="-2" attributes="0"/>
-                                              <Component id="ser3SelectButton" min="-2" max="-2" attributes="0"/>
-                                              <Component id="ser4SelectButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
-                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel21" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="printCommandTextField" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane2" pref="651" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel22" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="printCommandTextField" max="32767" attributes="0"/>
-                                      <Component id="jScrollPane2" pref="628" max="32767" attributes="0"/>
                                       <Component id="bdiTextField" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="joy2TextField" min="-2" pref="59" max="-2" attributes="0"/>
                                               <Component id="joy1TextField" min="-2" pref="59" max="-2" attributes="0"/>
@@ -878,6 +1005,36 @@
                                           <Component id="bootCommandTextField" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="1" attributes="0">
+                                                  <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="serial1TextField" pref="451" max="32767" attributes="0"/>
+                                              <Component id="serial4TextField" pref="451" max="32767" attributes="0"/>
+                                              <Component id="serial3TextField" max="32767" attributes="0"/>
+                                              <Component id="serial2TextField" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="ser1SelectButton" min="-2" max="-2" attributes="0"/>
+                                              <Component id="ser2SelectButton" min="-2" max="-2" attributes="0"/>
+                                              <Component id="ser3SelectButton" min="-2" max="-2" attributes="0"/>
+                                              <Component id="ser4SelectButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="170" pref="170" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -918,8 +1075,11 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane2" alignment="1" min="-2" pref="144" max="-2" attributes="0"/>
-                              <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="jScrollPane2" pref="341" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -945,7 +1105,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="269" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -954,37 +1114,57 @@
                 <Component class="javax.swing.JLabel" name="jLabel13">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Serial 1:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser1"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="serial1TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser1"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel14">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Serial 2:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser2"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="serial2TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser2"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="serial3TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser3"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="serial4TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser4"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel15">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Serial 3:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser3"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel16">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Serial 4:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser4"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel17">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Print command:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="command to use for print jobs"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="printCommandTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="command to use for print jobs"/>
+                  </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="printCommandTextFieldActionPerformed"/>
                   </Events>
@@ -999,9 +1179,10 @@
                     <Component class="javax.swing.JTable" name="deviceTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="6">
+                          <Table columnCount="7" rowCount="20">
                             <Column editable="true" title="Qdos name" type="java.lang.String"/>
                             <Column editable="true" title="Unix path" type="java.lang.String"/>
+                            <Column editable="true" title="" type="java.lang.Object"/>
                             <Column editable="true" title="Clean?" type="java.lang.Boolean"/>
                             <Column editable="true" title="Qdos fs?" type="java.lang.Boolean"/>
                             <Column editable="true" title="Native?" type="java.lang.Boolean"/>
@@ -1042,6 +1223,7 @@
                             </Column>
                           </TableColumnModel>
                         </Property>
+                        <Property name="rowHeight" type="int" value="32"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                         </Property>
@@ -1057,11 +1239,13 @@
                 <Component class="javax.swing.JLabel" name="jLabel22">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Boot device:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="file exposed by the BDI interface"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="ser2SelectButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ser2SelectButtonActionPerformed"/>
@@ -1070,6 +1254,7 @@
                 <Component class="javax.swing.JButton" name="ser1SelectButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser1"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ser1SelectButtonActionPerformed"/>
@@ -1078,6 +1263,7 @@
                 <Component class="javax.swing.JButton" name="ser3SelectButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser3"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ser3SelectButtonActionPerformed"/>
@@ -1086,12 +1272,16 @@
                 <Component class="javax.swing.JButton" name="ser4SelectButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Select"/>
+                    <Property name="toolTipText" type="java.lang.String" value="device for ser4"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ser4SelectButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="bootDeviceTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="evice to load BOOT file from"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel24">
                   <Properties>
@@ -1099,27 +1289,195 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="bdiTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="file exposed by the BDI interface"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel25">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Joy 1:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="1-8 SDL2 joystick index"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel26">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Joy 2:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="1-8 SDL2 joystick index"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="joy2TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="1-8 SDL2 joystick index"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="joy1TextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="1-8 SDL2 joystick index"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel27">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Boot command:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="command to run on boot (executed in basic)"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="bootCommandTextField">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="command to run on boot (executed in basic)"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel3">
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Misc">
+                    <Property name="tabTitle" type="java.lang.String" value="Misc"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="sqluxPathTextField" min="-2" pref="421" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="browseForSQLUXToggleButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="verbosity0RadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="verbosity1RadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="verbosity2RadioButton" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="verbosity3RadioButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="sqluxPathTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="browseForSQLUXToggleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="verbosity0RadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="verbosity1RadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="verbosity2RadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="verbosity3RadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="641" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="jLabel29">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Full path to sQLux executable:"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="sqluxPathTextField">
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="browseForSQLUXToggleButton">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Choose"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="browseForSQLUXToggleButtonActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel30">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="(Note: this is saved in the .ini file but only used by this app to launch sQLux)."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel31">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Verbosity:"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&quot;verbosity level 0-3"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="verbosity0RadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="verbosityButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&quot;verbosity level 0-3"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="verbosity1RadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="verbosityButtonGroup"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="1"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&quot;verbosity level 0-3"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="verbosity2RadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="verbosityButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="2"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&quot;verbosity level 0-3"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="verbosity3RadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="verbosityButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="3"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&quot;verbosity level 0-3"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Last run output">
+                    <Property name="tabTitle" type="java.lang.String" value="Last run output"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="lastRunTextArea">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -1128,6 +1486,13 @@
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder/>
+          </Border>
+        </Property>
+      </Properties>
       <AuxValues>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>

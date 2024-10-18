@@ -99,7 +99,7 @@ public class Ini
             for(String buffer=in.readLine().trim();buffer!=null;buffer=in.readLine())
             {
                 buffer=buffer.trim();
-                
+
                 if(buffer.isBlank()||buffer.startsWith("#")) continue;
 
                 final int p=buffer.indexOf("=");
@@ -109,7 +109,7 @@ public class Ini
                 }
                 else
                 {
-                    final String key=buffer.substring(0,p-1).trim();
+                    final String key=buffer.substring(0,p).trim();
                     final String value=buffer.substring(p+1).trim();
 
                     data.put(key,value);
