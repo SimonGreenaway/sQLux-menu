@@ -1,0 +1,5 @@
+The following java libraries are required:
+
+Apache commons collection (https://commons.apache.org/proper/commons-collections/download_collections.cgi)
+
+This is a netbeans IDE project, import the project into netbeans, adjust the location of the above library to your system and compile.
